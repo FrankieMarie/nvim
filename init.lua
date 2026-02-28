@@ -249,11 +249,16 @@ vim.g.maplocalleader = " " -- space for localleader
 -- ============================================================================
 
 -- highlight yanked text
+local augroup = vim.api.nvim_create_augroup("UserAutocmds", { clear = true })
+
 vim.api.nvim_create_autocmd("TextYankPost", {
-	group = augroup,
-	callback = function()
-		vim.hl.on_yank()
-	end,
+  group = augroup,
+  callback = function()
+    vim.highlight.on_yank({
+      higroup = "IncSearch",
+      timeout = 200,
+    })
+  end,
 })
 
 -- wrap, linebreak and spellcheck on markdown and text files
