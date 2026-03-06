@@ -13,4 +13,19 @@ if vim.g.vscode then
 	-- navigation
 	vim.keymap.set("n", "<C-o>", function() vscode.action("workbench.action.navigateBack") end)
 	vim.keymap.set("n", "<C-i>", function() vscode.action("workbench.action.navigateForward") end)
+else
+	-- native LSP keymaps
+	vim.api.nvim_create_autocmd("LspAttach", {
+		callback = function(args)
+			local map = function(keys, func)
+				vim.keymap.set("n", keys, func, { buffer = args.buf })
+			end
+			map("gd", vim.lsp.buf.definition)
+			map("gr", vim.lsp.buf.references)
+			map("K", vim.lsp.buf.hover)
+			map("<leader>ca", vim.lsp.buf.code_action)
+			map("<leader>rn", vim.lsp.buf.rename)
+			map("<leader>f", function() vim.lsp.buf.format({ async = true }) end)
+		end,
+	})
 end

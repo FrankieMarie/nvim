@@ -13,6 +13,7 @@ return {
       "javascript", "typescript", "tsx",
       "html", "css", "json", "yaml", "toml",
       "markdown", "markdown_inline",
+      "astro",
     })
 
     -- Enable treesitter highlighting for all filetypes with a parser
