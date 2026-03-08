@@ -1,3 +1,4 @@
+-- Bootstrap lazy.nvim (auto-install on first run)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -8,6 +9,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Auto-import all plugin specs from lua/plugins/
 require("lazy").setup({
   { import = "plugins" },
 })

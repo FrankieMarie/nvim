@@ -1,3 +1,4 @@
+-- Autocompletion (sources: LSP, file paths, snippets, current buffer)
 return {
   "saghen/blink.cmp",
   version = "*",

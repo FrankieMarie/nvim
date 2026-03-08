@@ -1,0 +1,24 @@
+-- Auto-format on save with prettier, falls back to LSP if prettier unavailable
+return {
+  "stevearc/conform.nvim",
+  event = { "BufWritePre" },
+  cmd = { "ConformInfo" },
+  opts = {
+    formatters_by_ft = {
+      javascript = { "prettier" },
+      javascriptreact = { "prettier" },
+      typescript = { "prettier" },
+      typescriptreact = { "prettier" },
+      css = { "prettier" },
+      html = { "prettier" },
+      json = { "prettier" },
+      yaml = { "prettier" },
+      markdown = { "prettier" },
+      astro = { "prettier" },
+    },
+    format_on_save = {
+      timeout_ms = 1000,
+      lsp_format = "fallback",
+    },
+  },
+}

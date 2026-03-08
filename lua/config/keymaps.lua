@@ -5,16 +5,28 @@
 if vim.g.vscode then
 	local vscode = require("vscode")
 
-	-- lsp (non-leader, handled by neovim directly)
+	-- LSP equivalents via vscode actions
 	vim.keymap.set("n", "gd", function() vscode.action("editor.action.revealDefinition") end)
 	vim.keymap.set("n", "gr", function() vscode.action("editor.action.goToReferences") end)
 	vim.keymap.set("n", "K", function() vscode.action("editor.action.showHover") end)
 
-	-- navigation
+	-- Jump list navigation
 	vim.keymap.set("n", "<C-o>", function() vscode.action("workbench.action.navigateBack") end)
 	vim.keymap.set("n", "<C-i>", function() vscode.action("workbench.action.navigateForward") end)
 else
-	-- native LSP keymaps
+	-- Navigate between splits with Ctrl+hjkl
+	vim.keymap.set("n", "<C-h>", "<C-w>h")
+	vim.keymap.set("n", "<C-j>", "<C-w>j")
+	vim.keymap.set("n", "<C-k>", "<C-w>k")
+	vim.keymap.set("n", "<C-l>", "<C-w>l")
+
+	-- Same navigation from terminal mode (escape terminal first)
+	vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h")
+	vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j")
+	vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k")
+	vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l")
+
+	-- LSP keymaps (only active when an LSP server attaches)
 	vim.api.nvim_create_autocmd("LspAttach", {
 		callback = function(args)
 			local map = function(keys, func)
@@ -25,7 +37,7 @@ else
 			map("K", vim.lsp.buf.hover)
 			map("<leader>ca", vim.lsp.buf.code_action)
 			map("<leader>rn", vim.lsp.buf.rename)
-			map("<leader>f", function() vim.lsp.buf.format({ async = true }) end)
+			map("<leader>f", function() require("conform").format({ async = true, lsp_format = "fallback" }) end)
 		end,
 	})
 end

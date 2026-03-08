@@ -1,65 +1,76 @@
-vim.opt.number = true -- line number
---vim.opt.relativenumber = true -- relative line numbers
-vim.opt.cursorline = true -- highlight current line
-vim.opt.wrap = false -- do not wrap lines by default
-vim.opt.scrolloff = 10 -- keep 10 lines above/below cursor
-vim.opt.sidescrolloff = 10 -- keep 10 lines to left/right of cursor
+-- Display
+vim.opt.number = true
+vim.opt.cursorline = true
+vim.opt.wrap = false
+vim.opt.scrolloff = 10
+vim.opt.sidescrolloff = 10
 
-vim.opt.tabstop = 2 -- tabwidth
-vim.opt.shiftwidth = 2 -- indent width
-vim.opt.softtabstop = 2 -- soft tab stop not tabs on tab/backspace
-vim.opt.expandtab = true -- use spaces instead of tabs
-vim.opt.smartindent = true -- smart auto-indent
-vim.opt.autoindent = true -- copy indent from current line
+-- Indentation (2 spaces)
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.autoindent = true
 
-vim.opt.ignorecase = true -- case insensitive search
-vim.opt.smartcase = true -- case sensitive if uppercase in string
-vim.opt.hlsearch = true -- highlight search matches
-vim.opt.incsearch = true -- show matches as you type
+-- Search (case insensitive unless uppercase is used)
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
 
-vim.opt.showmatch = true -- highlights matching brackets
-vim.opt.completeopt = "menuone,noinsert,noselect" -- completion options
-vim.opt.conceallevel = 0 -- do not hide markup
-vim.opt.concealcursor = "" -- do not hide cursorline in markup
-vim.opt.synmaxcol = 300 -- syntax highlighting limit
+-- Editor behavior
+vim.opt.showmatch = true                           -- flash matching bracket
+vim.opt.completeopt = "menuone,noinsert,noselect"  -- better completion menu
+vim.opt.conceallevel = 0                           -- show all markup characters
+vim.opt.concealcursor = ""
+vim.opt.synmaxcol = 300                            -- limit syntax highlighting per line
 
+-- Persistent undo (survives closing neovim)
 local undodir = vim.fn.expand("~/.vim/undodir")
-if
-	vim.fn.isdirectory(undodir) == 0 -- create undodir if nonexistent
-then
+if vim.fn.isdirectory(undodir) == 0 then
 	vim.fn.mkdir(undodir, "p")
 end
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.swapfile = false
+vim.opt.undofile = true
+vim.opt.undodir = undodir
 
-vim.opt.backup = false -- do not create a backup file
-vim.opt.writebackup = false -- do not write to a backup file
-vim.opt.swapfile = false -- do not create a swapfile
-vim.opt.undofile = true -- do create an undo file
-vim.opt.undodir = undodir -- set the undo directory
-vim.opt.updatetime = 300 -- faster completion
-vim.opt.timeoutlen = 500 -- timeout duration
-vim.opt.ttimeoutlen = 0 -- key code timeout
-vim.opt.autoread = true -- auto-reload changes if outside of neovim
-vim.opt.autowrite = false -- do not auto-save
+-- Timing
+vim.opt.updatetime = 300    -- ms before CursorHold fires (used by many plugins)
+vim.opt.timeoutlen = 500    -- ms to wait for mapped key sequence
+vim.opt.ttimeoutlen = 0     -- no delay for key codes (e.g. escape)
 
-vim.opt.hidden = true -- allow hidden buffers
-vim.opt.errorbells = false -- no error sounds
-vim.opt.backspace = "indent,eol,start" -- better backspace behavior
-vim.opt.autochdir = false -- do not autochange directories
-vim.opt.iskeyword:append("-") -- include - in words
-vim.opt.path:append("**") -- include subdirs in search
-vim.opt.selection = "inclusive" -- include last char in selection
-vim.opt.mouse = "a" -- enable mouse support
-vim.opt.clipboard:append("unnamedplus") -- use system clipboard
-vim.opt.modifiable = true -- allow buffer modifications
-vim.opt.encoding = "utf-8" -- set encoding
+-- File handling
+vim.opt.autoread = true     -- reload files changed outside neovim
+vim.opt.autowrite = false
+vim.opt.hidden = true       -- allow switching buffers without saving
 
-vim.opt.foldlevel = 99 -- start with all folds open
+-- General
+vim.opt.errorbells = false
+vim.opt.backspace = "indent,eol,start"
+vim.opt.autochdir = false
+vim.opt.iskeyword:append("-")          -- treat hyphenated words as one word
+vim.opt.path:append("**")             -- search subdirs with :find
+vim.opt.selection = "inclusive"
+vim.opt.mouse = "a"
+vim.opt.clipboard:append("unnamedplus") -- yank/paste uses system clipboard
+vim.opt.modifiable = true
+vim.opt.encoding = "utf-8"
 
-vim.opt.splitbelow = true -- horizontal splits go below
-vim.opt.splitright = true -- vertical splits go right
+-- Folding (start with all folds open)
+vim.opt.foldlevel = 99
 
-vim.opt.wildmenu = true -- tab completion
-vim.opt.wildmode = "longest:full,full" -- complete longest common match, full completion list, cycle through with Tab
-vim.opt.diffopt:append("linematch:60") -- improve diff display
-vim.opt.redrawtime = 10000 -- increase neovim redraw tolerance
-vim.opt.maxmempattern = 20000 -- increase max memory
+-- Splits open in expected direction
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
+-- Command-line completion
+vim.opt.wildmenu = true
+vim.opt.wildmode = "longest:full,full"
+
+-- Diff and performance
+vim.opt.diffopt:append("linematch:60") -- smarter diff alignment
+vim.opt.redrawtime = 10000             -- allow slow syntax/treesitter to finish
+vim.opt.maxmempattern = 20000

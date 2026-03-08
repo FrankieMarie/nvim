@@ -1,54 +1,57 @@
--- Git branch function with caching and Nerd Font icon
+-- Custom statusline using Nerd Font icons
+-- Exposes functions as globals so statusline %{} expressions can call them
+
+-- Cache git branch (shell out every 5s instead of every redraw)
 local cached_branch = ""
 local last_check = 0
 local function git_branch()
 	local now = vim.loop.now()
-	if now - last_check > 5000 then -- Check every 5 seconds
+	if now - last_check > 5000 then
 		cached_branch = vim.fn.system("git branch --show-current 2>/dev/null | tr -d '\n'")
 		last_check = now
 	end
 	if cached_branch ~= "" then
-		return " \u{e725} " .. cached_branch .. " " -- nf-dev-git_branch
+		return " \u{e725} " .. cached_branch .. " "
 	end
 	return ""
 end
 
--- File type with Nerd Font icon
+-- Map filetypes to Nerd Font icons
 local function file_type()
 	local ft = vim.bo.filetype
 	local icons = {
-		lua = "\u{e620} ", -- nf-dev-lua
-		python = "\u{e73c} ", -- nf-dev-python
-		javascript = "\u{e74e} ", -- nf-dev-javascript
-		typescript = "\u{e628} ", -- nf-dev-typescript
+		lua = "\u{e620} ",
+		python = "\u{e73c} ",
+		javascript = "\u{e74e} ",
+		typescript = "\u{e628} ",
 		javascriptreact = "\u{e7ba} ",
 		typescriptreact = "\u{e7ba} ",
-		html = "\u{e736} ", -- nf-dev-html5
-		css = "\u{e749} ", -- nf-dev-css3
+		html = "\u{e736} ",
+		css = "\u{e749} ",
 		scss = "\u{e749} ",
-		json = "\u{e60b} ", -- nf-dev-json
-		markdown = "\u{e73e} ", -- nf-dev-markdown
-		vim = "\u{e62b} ", -- nf-dev-vim
-		sh = "\u{f489} ", -- nf-oct-terminal
+		json = "\u{e60b} ",
+		markdown = "\u{e73e} ",
+		vim = "\u{e62b} ",
+		sh = "\u{f489} ",
 		bash = "\u{f489} ",
 		sql = "\u{e706} ",
 		yaml = "\u{f481} ",
 		toml = "\u{e615} ",
 		xml = "\u{f05c} ",
-		dockerfile = "\u{f308} ", -- nf-linux-docker
-		gitcommit = "\u{f418} ", -- nf-oct-git_commit
-		gitconfig = "\u{f1d3} ", -- nf-fa-git
+		dockerfile = "\u{f308} ",
+		gitcommit = "\u{f418} ",
+		gitconfig = "\u{f1d3} ",
 		astro = "\u{e628} ",
 	}
 
   if ft == "" then
-		return " \u{f15b} " -- nf-fa-file_o
+		return " \u{f15b} "
 	end
 
 	return ((icons[ft] or " \u{f15b} ") .. ft)
 end
 
--- File size with Nerd Font icon
+-- Human-readable file size
 local function file_size()
 	local size = vim.fn.getfsize(vim.fn.expand("%"))
 	if size < 0 then
@@ -62,10 +65,10 @@ local function file_size()
 	else
 		size_str = string.format("%.1fM", size / 1024 / 1024)
 	end
-	return " \u{f016} " .. size_str .. " " -- nf-fa-file_o
+	return " \u{f016} " .. size_str .. " "
 end
 
--- Mode indicators with Nerd Font icons
+-- Current mode with icon
 local function mode_icon()
 	local mode = vim.fn.mode()
 	local modes = {
@@ -86,12 +89,13 @@ local function mode_icon()
 	return modes[mode] or (" \u{f059} " .. mode)
 end
 
+-- Expose to global scope for statusline %{v:lua.*} expressions
 _G.mode_icon = mode_icon
 _G.git_branch = git_branch
 _G.file_type = file_type
 _G.file_size = file_size
 
--- Function to change statusline based on window focus
+-- Active window: full statusline | Inactive window: minimal statusline
 local function setup_dynamic_statusline()
 	vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
 		callback = function()
@@ -100,14 +104,14 @@ local function setup_dynamic_statusline()
 				"%#StatusLineBold#",
 				"%{v:lua.mode_icon()}",
 				"%#StatusLine#",
-				" \u{e0b1} %f %h%m%r", -- nf-pl-left_hard_divider
+				" \u{e0b1} %f %h%m%r",
 				"%{v:lua.git_branch()}",
-				"\u{e0b1} ", -- nf-pl-left_hard_divider
+				"\u{e0b1} ",
 				"%{v:lua.file_type()}",
-				"\u{e0b1} ", -- nf-pl-left_hard_divider
+				"\u{e0b1} ",
 				"%{v:lua.file_size()}",
-				"%=", -- Right-align everything after this
-				" \u{f017} %l:%c  %P ", -- nf-fa-clock_o for line/col
+				"%=",
+				" \u{f017} %l:%c  %P ",
 			})
 		end,
 	})

@@ -7,7 +7,7 @@ return {
       install_dir = vim.fn.stdpath("data") .. "/site",
     })
 
-    -- Install parsers
+    -- Auto-install parsers for these languages
     require("nvim-treesitter").install({
       "lua", "vim", "vimdoc", "bash", "python",
       "javascript", "typescript", "tsx",
@@ -16,7 +16,7 @@ return {
       "astro",
     })
 
-    -- Enable treesitter highlighting for all filetypes with a parser
+    -- Enable treesitter highlighting for any filetype that has a parser
     vim.api.nvim_create_autocmd("FileType", {
       callback = function()
         pcall(vim.treesitter.start)

@@ -1,3 +1,4 @@
+-- lua_ls: make the LSP aware of neovim runtime files for completions
 return {
   settings = {
     Lua = {
