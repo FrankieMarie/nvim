@@ -26,6 +26,16 @@ else
 	vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k")
 	vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l")
 
+	-- Close current tab (useful for closing diff views)
+	vim.keymap.set("n", "<leader>q", "<cmd>tabclose<cr>")
+
+	-- Show diagnostic error on current line
+	vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostic" })
+
+	-- Resize code window (shrink/grow Claude on the right)
+	vim.keymap.set("n", "<leader>.", "<cmd>vertical resize +5<cr>", { desc = "Widen current window" })
+	vim.keymap.set("n", "<leader>,", "<cmd>vertical resize -5<cr>", { desc = "Narrow current window" })
+
 	-- LSP keymaps (only active when an LSP server attaches)
 	vim.api.nvim_create_autocmd("LspAttach", {
 		callback = function(args)

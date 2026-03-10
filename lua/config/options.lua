@@ -65,6 +65,9 @@ vim.opt.foldlevel = 99
 -- Splits open in expected direction
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+vim.opt.equalalways = false  -- don't auto-resize splits when opening/closing windows
+vim.opt.winwidth = 30
+vim.opt.winminwidth = 30
 
 -- Command-line completion
 vim.opt.wildmenu = true

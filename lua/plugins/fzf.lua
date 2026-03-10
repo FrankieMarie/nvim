@@ -9,6 +9,7 @@ return {
     { "<leader>fb", "<cmd>FzfLua buffers<cr>", desc = "Buffers" },
     { "<leader>fh", "<cmd>FzfLua helptags<cr>", desc = "Help tags" },
     { "<leader>fr", "<cmd>FzfLua resume<cr>", desc = "Resume last search" },
+    { "<leader>gs", "<cmd>FzfLua git_status<cr>", desc = "Git changed files" },
   },
   opts = {},
 }
