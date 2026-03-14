@@ -18,6 +18,11 @@ end
 set_transparent()
 vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FF10F0", bg = "none", bold = true })
 
+-- Floating windows: visible background + rounded border
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1e1e1e" })
+vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#767676", bg = "#1e1e1e" })
+vim.o.winborder = "rounded"
+
 -- UI layout
 vim.opt.signcolumn = "yes"    -- prevent layout shift from LSP diagnostics
 vim.opt.colorcolumn = "100"

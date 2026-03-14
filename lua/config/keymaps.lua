@@ -32,7 +32,7 @@ else
 	-- Show diagnostic error on current line
 	vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show diagnostic" })
 
-	-- Resize code window (shrink/grow Claude on the right)
+	-- Resize current window
 	vim.keymap.set("n", "<leader>.", "<cmd>vertical resize +5<cr>", { desc = "Widen current window" })
 	vim.keymap.set("n", "<leader>,", "<cmd>vertical resize -5<cr>", { desc = "Narrow current window" })
 
