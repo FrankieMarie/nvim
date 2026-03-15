@@ -115,7 +115,7 @@ local function setup_dynamic_statusline()
 			})
 		end,
 	})
-	vim.api.nvim_set_hl(0, "StatusLineBold", { bold = true })
+	vim.api.nvim_set_hl(0, "StatusLineBold", { bold = true, bg = "#1e1e1e" })
 
 	vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
 		callback = function()
