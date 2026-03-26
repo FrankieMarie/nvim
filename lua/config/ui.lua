@@ -20,9 +20,9 @@ vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FF10F0", bg = "none", bold = tru
 
 -- Floating windows: visible background + rounded border
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1e1e1e" })
-vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#767676", bg = "#1e1e1e" })
-vim.api.nvim_set_hl(0, "StatusLine", { fg = "#d4d4d4", bg = "#1e1e1e" })
-vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#767676", bg = "#1e1e1e" })
+vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#767676", bg = "none" })
+vim.api.nvim_set_hl(0, "StatusLine", { fg = "#1c1c1c", bg = "#af87af" })
+vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#1c1c1c", bg = "#af87af" })
 vim.o.winborder = "rounded"
 
 -- UI layout
